@@ -5,108 +5,117 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EMPIRE VIP | H.A. ROUIS</title>
     <script src="https://tailwindcss.com"></script>
-    <script src="https://cloudflare.com"></script>
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
-        body { background-color: #000; color: #fff; font-family: 'Montserrat', sans-serif; overflow: hidden; margin: 0; }
+        body { background-color: #000; color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding: 0; }
         
-        /* Typographie Or Brossé pour remplacer le blanc "catastrophique" */
+        /* TYPOGRAPHIE OR CENTRÉE */
         .gold-text {
             background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-family: 'Cinzel', serif;
-            filter: drop-shadow(0 0 2px rgba(179, 135, 40, 0.4));
+            display: block;
+            text-align: center;
         }
 
-        /* Bouton Elite */
+        /* SATELLITE DORÉ ANIMÉ - CENTRAL */
+        .satellite-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 250px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .satellite-svg {
+            width: 180px;
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));
+            animation: rotate-satellite 20s linear infinite;
+        }
+
+        @keyframes rotate-satellite {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* BOUTON LINGOT */
         .btn-vip {
             background: linear-gradient(135deg, #D4AF37 0%, #996515 100%);
-            color: black; font-weight: 900; letter-spacing: 3px;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: black;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.2);
+            border: none;
+            transition: 0.4s ease;
         }
+        .btn-vip:hover { transform: scale(1.02); filter: brightness(1.2); }
 
-        #canvas-container { width: 100%; height: 350px; cursor: move; }
+        .line-gold {
+            height: 1px;
+            width: 60px;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+            margin: 15px auto;
+        }
     </style>
 </head>
-<body class="flex flex-col items-center justify-between min-h-screen py-10 px-6">
+<body class="flex flex-col items-center justify-center min-h-screen p-8">
 
-    <header class="text-center">
-        <h2 class="gold-text text-2xl tracking-[0.4em] mb-1">EMPIRE VIP</h2>
-        <div class="h-[1px] w-20 bg-yellow-600/30 mx-auto mb-2"></div>
-        <p class="text-[9px] text-gray-500 uppercase tracking-widest">Console de Pilotage Média</p>
+    <!-- HEADER CENTRAL -->
+    <header class="w-full text-center">
+        <h2 class="gold-text text-xl tracking-[0.5em]">EMPIRE VIP</h2>
+        <div class="line-gold"></div>
+        <p class="text-[9px] text-gray-500 uppercase tracking-[0.4em]">Système de Pilotage Média</p>
     </header>
 
-    <main class="w-full flex flex-col items-center">
-        <h1 class="gold-text text-4xl md:text-6xl text-center leading-tight">
-            L'EXPÉRIENCE <br> <span class="text-white font-light italic">SENSORIELLE</span>
+    <!-- MAIN CONTENT - ALIGNEMENT TOTAL -->
+    <main class="w-full max-w-lg flex flex-col items-center mt-12">
+        
+        <h1 class="gold-text text-3xl md:text-5xl leading-tight uppercase">
+            Le Prestige du<br>
+            <span class="text-white font-light lowercase italic" style="font-family: 'Montserrat';">Pilotage Média</span>
         </h1>
 
-        <!-- LE SATELLITE 3D (Remplace le logo entouré) -->
-        <div id="canvas-container"></div>
+        <!-- LE SATELLITE (CENTRE DU MONDE) -->
+        <div class="satellite-container">
+            <svg class="satellite-svg" viewBox="0 0 100 100" xmlns="http://w3.org">
+                <!-- Orbite fine -->
+                <circle cx="50" cy="50" r="48" fill="none" stroke="#D4AF37" stroke-width="0.2" stroke-dasharray="2 2" opacity="0.5""")/>>
+                <!-- Corps du Satellite -->
+                <rect x="42" y="42" width="16" height="16" fill="#D4AF37" rx="2" />
+                <!-- Panneaux Solaires -->
+                <rect x="15" y="46" width="25" height="8" fill="#996515" />
+                <rect x="60" y="46" width="25" height="8" fill="#996515" />
+                <!-- Antennes -->
+                <line x1="50" y1="42" x2="50" y2="30" stroke="#F9E27E" stroke-width="1" />
+                <circle cx="50" cy="30" r="2" fill="#F9E27E" />
+                <!-- Éclat central -->
+                <circle cx="50" cy="50" r="4" fill="#F9E27E">
+                    <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite" />
+                </circle>
+            </svg>
+        </div>
 
-        <p class="text-gray-400 text-[11px] max-w-xs text-center mb-8 leading-relaxed tracking-wide">
-            L'AUTOMATISATION TOTALE AU SERVICE DE VOTRE DIVERTISSEMENT. <br>
-            <span class="text-yellow-600/60 font-bold">GESTION AUTONOME 8K</span>
+        <p class="text-gray-400 text-[11px] text-center mb-10 leading-loose tracking-[0.1em] px-4">
+            L’AUTOMATISATION TOTALE AU SERVICE DE VOTRE DIVERTISSEMENT.<br>
+            <span class="text-white font-semibold">ZÉRO INTERVENTION HUMAINE.</span>
         </p>
 
-        <button class="btn-vip w-full max-w-sm py-5 rounded-sm uppercase text-xs">
+        <!-- BOUTON VIP -->
+        <button class="btn-vip w-full py-5 rounded-sm text-[11px]">
             Débloquer la Console (5.55€/an)
         </button>
+
     </main>
 
-    <footer class="text-[9px] text-gray-700 tracking-[0.3em] uppercase">
-        © 2026 EDITION LIMITÉE - <span class="text-gray-500">H.A. ROUIS</span>
+    <!-- FOOTER CENTRAL -->
+    <footer class="mt-16 text-center">
+        <p class="text-[8px] text-gray-700 tracking-[0.5em] uppercase">
+            © 2026 EDITION LIMITÉE — <span class="text-gray-500">H.A. ROUIS</span>
+        </p>
     </footer>
 
-    <script>
-        // SCRIPT SATELLITE 3D LUXE
-        const container = document.getElementById('canvas-container');
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(50, container.offsetWidth / 350, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        
-        renderer.setSize(container.offsetWidth, 350);
-        container.appendChild(renderer.domElement);
-
-        // Géométrie du Satellite (Look technologique)
-        const group = new THREE.Group();
-        const coreGeom = new THREE.IcosahedronGeometry(1.2, 0);
-        const coreMat = new THREE.MeshPhongMaterial({ color: 0xD4AF37, wireframe: true });
-        const core = new THREE.Mesh(coreGeom, coreMat);
-        group.add(core);
-
-        // Anneau Orbital
-        const ringGeom = new THREE.TorusGeometry(2.5, 0.02, 16, 100);
-        const ringMat = new THREE.MeshBasicMaterial({ color: 0xD4AF37, transparent: true, opacity: 0.4 });
-        const ring = new THREE.Mesh(ringGeom, ringMat);
-        ring.rotation.x = Math.PI / 2;
-        group.add(ring);
-
-        scene.add(group);
-
-        // Lumières (Reflets Or)
-        const light = new THREE.PointLight(0xF9E27E, 2, 50);
-        light.position.set(5, 5, 5);
-        scene.add(light);
-        scene.add(new THREE.AmbientLight(0x404040));
-
-        camera.position.z = 7;
-
-        function animate() {
-            requestAnimationFrame(animate);
-            group.rotation.y += 0.005; // Rotation fluide 60fps
-            group.rotation.x += 0.002;
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        window.addEventListener('resize', () => {
-            camera.aspect = container.offsetWidth / 350;
-            camera.updateProjectionMatrix();
-            renderer.setSize(container.offsetWidth, 350);
-        });
-    </script>
 </body>
 </html>
