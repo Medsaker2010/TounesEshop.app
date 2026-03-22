@@ -2,6 +2,8 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>TES SAT</title>
 
 <style>
@@ -13,17 +15,32 @@ body {
     text-align:center;
 }
 
+/* Container mobile */
+.container {
+    padding:20px;
+    max-width:400px;
+    margin:auto;
+}
+
+/* Title */
 h1 {
-    margin-top:40px;
+    font-size:28px;
+    margin-top:20px;
+}
+
+/* Subtitle */
+.subtitle {
+    font-size:14px;
+    opacity:0.8;
 }
 
 /* Satellite */
 .satellite {
-    width:120px;
-    height:120px;
+    width:100px;
+    height:100px;
     background:gold;
     border-radius:50%;
-    margin:40px auto;
+    margin:30px auto;
     animation: spin 6s linear infinite;
 }
 
@@ -32,68 +49,118 @@ h1 {
     to {transform: rotate(360deg);}
 }
 
+/* Message important */
+.highlight {
+    background:#111;
+    padding:15px;
+    border-radius:10px;
+    margin:20px 0;
+    font-size:14px;
+}
+
+/* Button */
 button {
-    padding:15px 30px;
+    width:100%;
+    padding:15px;
     background:#FFD700;
     color:black;
     border:none;
-    font-size:18px;
+    font-size:16px;
     border-radius:10px;
     cursor:pointer;
+    font-weight:bold;
 }
 
+/* Result box */
 .box {
-    margin-top:30px;
+    margin-top:20px;
+    font-size:14px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>TES SAT</h1>
-<p>Console VIP Streaming</p>
+<div class="container">
 
-<div class="satellite"></div>
+    <h1>TES SAT</h1>
+    <p class="subtitle">Console VIP Streaming</p>
 
-<div id="app"></div>
+    <div class="satellite"></div>
+
+    <!-- MESSAGE BUSINESS IMPORTANT -->
+    <div class="highlight">
+        🎁 <b>Test gratuit disponible après activation</b><br><br>
+        🔓 Accès à vie à l'application<br>
+        💎 Interface VIP + outils premium<br><br>
+        ⚠️ Le QR Code est généré uniquement après paiement
+    </div>
+
+    <!-- PRIX CLAIR -->
+    <div class="highlight">
+        💳 <b>5.55€ / an</b><br>
+        (Accès à l'application uniquement — pas un abonnement contenu)
+    </div>
+
+    <div id="app"></div>
+
+</div>
 
 <script>
-let paid = false;
+// =======================
+// SIMULATION PAIEMENT (remplacer par Stripe après)
+// =======================
 
-// SIMULATION paiement
 function pay() {
-    document.getElementById("app").innerHTML = "<p>Traitement du paiement...</p>";
+    document.getElementById("app").innerHTML = "<p>⏳ Activation en cours...</p>";
 
     setTimeout(() => {
-        paid = true;
         generateAccess();
     }, 2000);
 }
 
-// Génération accès FAKE (frontend uniquement)
-function generateAccess() {
-    const user = "user" + Math.floor(Math.random()*10000);
-    const pass = "pass" + Math.floor(Math.random()*10000);
+// =======================
+// API RÉELLE (OPTION)
+// =======================
 
-    const link = `http://demo-server/get.php?user=${user}&pass=${pass}&type=m3u_plus`;
+async function generateAccess() {
 
-    document.getElementById("app").innerHTML = `
-        <div class="box">
-            <h2>Accès Activé</h2>
-            <p><b>Username:</b> ${user}</p>
-            <p><b>Password:</b> ${pass}</p>
+    try {
+        // 👉 ICI TU METTRAS TON BACKEND PLUS TARD
+        // Exemple appel API réel :
+        // const res = await fetch("https://ton-backend.com/create-line");
 
-            <p><b>Lien:</b></p>
-            <a href="${link}" target="_blank">${link}</a>
+        // SIMULATION temporaire
+        const user = "vip" + Math.floor(Math.random()*9999);
+        const pass = "ts" + Math.floor(Math.random()*9999);
 
-            <br><br>
+        const link = `http://my8k.me:8080/get.php?user=${user}&pass=${pass}&type=m3u_plus`;
 
-            <img src="https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(link)}" />
-        </div>
-    `;
+        document.getElementById("app").innerHTML = `
+            <div class="box">
+                <h3>✅ Accès activé</h3>
+
+                <p><b>User:</b> ${user}</p>
+                <p><b>Pass:</b> ${pass}</p>
+
+                <p><b>Lien:</b></p>
+                <a href="${link}" target="_blank">${link}</a>
+
+                <br><br>
+
+                <img width="150"
+                src="https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(link)}" />
+
+                <p style="margin-top:10px;">📱 Scanner pour installation rapide</p>
+            </div>
+        `;
+
+    } catch (e) {
+        document.getElementById("app").innerHTML = "❌ Erreur serveur";
+    }
 }
 
-// Affichage initial
+// INIT
 document.getElementById("app").innerHTML = `
     <button onclick="pay()">ACCÈS VIP – 5.55€</button>
 `;
