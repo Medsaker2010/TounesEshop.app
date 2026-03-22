@@ -16,83 +16,87 @@
             font-family: 'Cinzel', serif;
         }
 
-        /* SATELLITE DORÉ - TAILLE OPTIMISÉE */
-        .satellite-box {
+        /* SATELLITE ROND LUXE (ORBITAL) */
+        .satellite-wrapper {
             position: relative;
-            width: 220px;
-            height: 220px;
+            width: 280px;
+            height: 280px;
             display: flex;
             justify-content: center;
             align-items: center;
-            filter: drop-shadow(0 0 25px rgba(212, 175, 55, 0.4));
-        }
-        
-        .satellite-svg {
-            width: 100%;
-            height: 100%;
-            animation: spin-luxe 25s linear infinite;
         }
 
-        @keyframes spin-luxe {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .orbit {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 175, 55, 0.2);
         }
+
+        .orbit-1 { width: 100%; height: 100%; animation: rotate 30s linear infinite; border-style: dashed; }
+        .orbit-2 { width: 70%; height: 70%; animation: rotate-rev 20s linear infinite; border: 1px solid rgba(212, 175, 55, 0.4); }
+        
+        .core-sphere {
+            width: 60px; height: 60px;
+            background: radial-gradient(circle at 30% 30%, #fcf6ba, #bf953f, #8a6d3b);
+            border-radius: 50%;
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.6), inset -5px -5px 15px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 10;
+        }
+
+        .satellite-dot {
+            position: absolute; width: 8px; height: 8px;
+            background: #fcf6ba; border-radius: 50%;
+            top: -4px; left: 50%; transform: translateX(-50%);
+            box-shadow: 0 0 10px #D4AF37;
+        }
+
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes rotate-rev { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
 
         .btn-vip {
             background: linear-gradient(135deg, #D4AF37 0%, #996515 100%);
-            color: #000;
-            font-weight: 900;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            box-shadow: 0 0 40px rgba(212, 175, 55, 0.2);
-            padding: 20px;
-            width: 100%;
-            max-width: 320px;
-            border-radius: 2px;
+            color: #000; font-weight: 900; letter-spacing: 4px;
+            text-transform: uppercase; box-shadow: 0 0 50px rgba(212, 175, 55, 0.2);
+            padding: 22px; width: 100%; max-width: 340px; border-radius: 0px; border: none;
         }
     </style>
 </head>
-<body class="p-8">
+<body class="p-10">
 
-    <!-- HEADER -->
     <header>
-        <h2 class="gold-text text-xl tracking-[0.4em]">EMPIRE VIP</h2>
-        <p class="text-[9px] text-gray-500 uppercase tracking-[0.3em] mt-1">Console de Pilotage Média</p>
+        <h2 class="gold-text text-xl tracking-[0.6em]">EMPIRE VIP</h2>
+        <div class="h-[1px] w-12 bg-yellow-600/40 mx-auto mt-2"></div>
     </header>
 
-    <!-- CENTRE : TITRE + SATELLITE -->
-    <main class="flex flex-col items-center justify-center gap-6">
-        <h1 class="gold-text text-3xl uppercase tracking-tighter leading-tight">
-            L'EXPÉRIENCE<br><span class="text-white italic font-light lowercase" style="font-family: 'Montserrat';">Sensorielle</span>
+    <main class="flex flex-col items-center justify-center flex-grow">
+        <h1 class="gold-text text-4xl md:text-5xl uppercase tracking-widest leading-tight mb-4">
+            L'EXPÉRIENCE<br><span class="text-white font-extralight lowercase italic" style="font-family: 'Montserrat';">Sensorielle</span>
         </h1>
 
-        <div class="satellite-box">
-            <svg class="satellite-svg" viewBox="0 0 100 100" xmlns="http://w3.org">
-                <!-- Orbite -->
-                <circle cx="50" cy="50" r="45" fill="none" stroke="#D4AF37" stroke-width="0.3" stroke-dasharray="4 2" opacity="0.4""")/>>
-                <!-- Satellite Structure -->
-                <rect x="42" y="42" width="16" height="16" fill="#D4AF37" rx="1" />
-                <!-- Panneaux -->
-                <rect x="15" y="47" width="25" height="6" fill="#996515" />
-                <rect x="60" y="47" width="25" height="6" fill="#996515" />
-                <!-- Cœur Brillant -->
-                <circle cx="50" cy="50" r="3" fill="#FFF">
-                    <animate attributeName="opacity" values="1;0.2;1" dur="1.5s" repeatCount="indefinite" />
-                </circle>
-            </svg>
+        <!-- SATELLITE ROND ET HARMONIEUX -->
+        <div class="satellite-wrapper">
+            <div class="orbit orbit-1">
+                <div class="satellite-dot"></div>
+            </div>
+            <div class="orbit orbit-2">
+                <div class="satellite-dot" style="top: auto; bottom: -4px;"></div>
+            </div>
+            <div class="core-sphere"></div>
+            <!-- Lueur de fond -->
+            <div class="absolute w-64 h-64 bg-yellow-500/5 blur-3xl rounded-full"></div>
         </div>
 
-        <p class="text-gray-400 text-[10px] tracking-[0.2em] leading-relaxed uppercase">
-            L’AUTOMATISATION TOTALE AU SERVICE DE<br>VOTRE DIVERTISSEMENT. <span class="text-white font-bold">8K NATIVE.</span>
+        <p class="text-gray-500 text-[10px] tracking-[0.4em] uppercase mt-4">
+            Système de Pilotage Média • <span class="text-white">8K Ultra-Stream</span>
         </p>
     </main>
 
-    <!-- FOOTER : BOUTON + CRÉDITS -->
-    <footer class="w-full flex flex-col items-center gap-6">
-        <button class="btn-vip text-xs">
+    <footer class="w-full flex flex-col items-center gap-8">
+        <button class="btn-vip text-[10px]">
             Débloquer la Console (5.55€/an)
         </button>
-        <p class="text-[8px] text-gray-700 tracking-[0.5em] uppercase">
+        <p class="text-[8px] text-gray-800 tracking-[0.6em] uppercase">
             © 2026 EDITION LIMITÉE — H.A. ROUIS
         </p>
     </footer>
