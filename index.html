@@ -1,170 +1,119 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>TES SAT</title>
-
-<style>
-body {
-    margin:0;
-    background:black;
-    color:#FFD700;
-    font-family:Arial;
-    text-align:center;
-}
-
-/* Container mobile */
-.container {
-    padding:20px;
-    max-width:400px;
-    margin:auto;
-}
-
-/* Title */
-h1 {
-    font-size:28px;
-    margin-top:20px;
-}
-
-/* Subtitle */
-.subtitle {
-    font-size:14px;
-    opacity:0.8;
-}
-
-/* Satellite */
-.satellite {
-    width:100px;
-    height:100px;
-    background:gold;
-    border-radius:50%;
-    margin:30px auto;
-    animation: spin 6s linear infinite;
-}
-
-@keyframes spin {
-    from {transform: rotate(0);}
-    to {transform: rotate(360deg);}
-}
-
-/* Message important */
-.highlight {
-    background:#111;
-    padding:15px;
-    border-radius:10px;
-    margin:20px 0;
-    font-size:14px;
-}
-
-/* Button */
-button {
-    width:100%;
-    padding:15px;
-    background:#FFD700;
-    color:black;
-    border:none;
-    font-size:16px;
-    border-radius:10px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-/* Result box */
-.box {
-    margin-top:20px;
-    font-size:14px;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMPIRE TOUNES-E-SHOP VIP | Système de Pilotage Média</title>
+    <script src="https://tailwindcss.com"></script>
+    <script src="https://cloudflare.com"></script>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        body { background-color: #050505; color: #E5E7EB; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .gold-gradient { background: linear-gradient(90deg, #D4AF37 0%, #F9E27E 50%, #C5A028 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .btn-vip { background: linear-gradient(45deg, #D4AF37, #996515); transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.1); }
+        .btn-vip:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3); }
+        #satellite-container { height: 400px; width: 100%; cursor: move; }
+        .cinzel { font-family: 'Cinzel', serif; }
+    </style>
 </head>
-
 <body>
 
-<div class="container">
+    <!-- Header Luxe -->
+    <nav class="p-6 flex justify-between items-center border-b border-yellow-900/30">
+        <div class="text-2xl font-bold cinzel gold-gradient">EMPIRE VIP</div>
+        <div class="space-x-8 hidden md:flex text-sm tracking-widest uppercase">
+            <a href="#vision" class="hover:text-yellow-500 transition">La Vision</a>
+            <a href="#console" class="hover:text-yellow-500 transition">Console VIP</a>
+            <a href="#monnaie" class="hover:text-yellow-500 transition">Paiement Crypto</a>
+        </div>
+        <button class="btn-vip px-6 py-2 rounded-full text-black font-bold text-xs uppercase tracking-tighter">Accès Membre</button>
+    </nav>
 
-    <h1>TES SAT</h1>
-    <p class="subtitle">Console VIP Streaming</p>
+    <!-- Hero Section avec Satellite -->
+    <section class="relative pt-20 pb-32 flex flex-col items-center text-center px-4">
+        <h1 class="text-5xl md:text-7xl font-bold cinzel mb-6">
+            LE PRESTIGE DU <br><span class="gold-gradient">PILOTAGE MÉDIA</span>
+        </h1>
+        <p class="max-w-2xl text-gray-400 text-lg mb-10 font-light">L'automatisation totale au service de votre divertissement. Entrez dans l'ère de la gestion autonome 8K.</p>
+        
+        <!-- Le Satellite Doré (Placeholder Three.js) -->
+        <div id="satellite-container"></div>
 
-    <div class="satellite"></div>
+        <div class="mt-12 flex flex-col md:flex-row gap-6">
+            <button onclick="window.location.href='/stripe-checkout'" class="btn-vip px-10 py-4 rounded-lg text-black font-black text-lg shadow-xl">
+                DÉBLOQUER LA CONSOLE (5.55€/an)
+            </button>
+        </div>
+    </section>
 
-    <!-- MESSAGE BUSINESS IMPORTANT -->
-    <div class="highlight">
-        🎁 <b>Test gratuit disponible après activation</b><br><br>
-        🔓 Accès à vie à l'application<br>
-        💎 Interface VIP + outils premium<br><br>
-        ⚠️ Le QR Code est généré uniquement après paiement
-    </div>
-
-    <!-- PRIX CLAIR -->
-    <div class="highlight">
-        💳 <b>5.55€ / an</b><br>
-        (Accès à l'application uniquement — pas un abonnement contenu)
-    </div>
-
-    <div id="app"></div>
-
-</div>
-
-<script>
-// =======================
-// SIMULATION PAIEMENT (remplacer par Stripe après)
-// =======================
-
-function pay() {
-    document.getElementById("app").innerHTML = "<p>⏳ Activation en cours...</p>";
-
-    setTimeout(() => {
-        generateAccess();
-    }, 2000);
-}
-
-// =======================
-// API RÉELLE (OPTION)
-// =======================
-
-async function generateAccess() {
-
-    try {
-        // 👉 ICI TU METTRAS TON BACKEND PLUS TARD
-        // Exemple appel API réel :
-        // const res = await fetch("https://ton-backend.com/create-line");
-
-        // SIMULATION temporaire
-        const user = "vip" + Math.floor(Math.random()*9999);
-        const pass = "ts" + Math.floor(Math.random()*9999);
-
-        const link = `http://my8k.me:8080/get.php?user=${user}&pass=${pass}&type=m3u_plus`;
-
-        document.getElementById("app").innerHTML = `
-            <div class="box">
-                <h3>✅ Accès activé</h3>
-
-                <p><b>User:</b> ${user}</p>
-                <p><b>Pass:</b> ${pass}</p>
-
-                <p><b>Lien:</b></p>
-                <a href="${link}" target="_blank">${link}</a>
-
-                <br><br>
-
-                <img width="150"
-                src="https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(link)}" />
-
-                <p style="margin-top:10px;">📱 Scanner pour installation rapide</p>
+    <!-- Arsenal de Diagnostic (Aperçu) -->
+    <section id="console" class="py-20 bg-gradient-to-b from-black to-[#0a0a0a] border-y border-yellow-900/20">
+        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-10">
+            <div class="p-8 border border-white/5 rounded-2xl bg-white/5 backdrop-blur-md">
+                <div class="text-yellow-500 text-3xl mb-4">⚡</div>
+                <h3 class="cinzel text-xl mb-2">Diagnostic Temps Réel</h3>
+                <p class="text-sm text-gray-400">Test de Ping et statut des serveurs Strong & Nexon en un clic.</p>
             </div>
-        `;
+            <div class="p-8 border border-white/5 rounded-2xl bg-white/5 backdrop-blur-md border-yellow-500/30">
+                <div class="text-yellow-500 text-3xl mb-4">🛰️</div>
+                <h3 class="cinzel text-xl mb-2">Activation Auto</h3>
+                <p class="text-sm text-gray-400">24h de test offerts immédiatement après votre inscription Stripe.</p>
+            </div>
+            <div class="p-8 border border-white/5 rounded-2xl bg-white/5 backdrop-blur-md">
+                <div class="text-yellow-500 text-3xl mb-4">₿</div>
+                <h3 class="cinzel text-xl mb-2">Crypto Gateway</h3>
+                <p class="text-sm text-gray-400">Validation Blockchain instantanée pour vos abonnements BTC/USDT.</p>
+            </div>
+        </div>
+    </section>
 
-    } catch (e) {
-        document.getElementById("app").innerHTML = "❌ Erreur serveur";
-    }
-}
+    <!-- Footer -->
+    <footer class="py-10 text-center text-gray-600 text-xs tracking-widest uppercase">
+        &copy; 2026 EMPIRE TOUNES-E-SHOP - H.A.ROUIS Edition - Zéro Intervention Humaine
+    </footer>
 
-// INIT
-document.getElementById("app").innerHTML = `
-    <button onclick="pay()">ACCÈS VIP – 5.55€</button>
-`;
-</script>
+    <script>
+        // SCRIPT SATELLITE (VERSION SIMPLIFIÉE)
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / 400, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, 400);
+        document.getElementById('satellite-container').appendChild(renderer.domElement);
 
+        // Création d'une sphère dorée (Le Satellite)
+        const geometry = new THREE.IcosahedronGeometry(2, 1);
+        const material = new THREE.MeshPhongMaterial({
+            color: 0xD4AF37,
+            wireframe: true,
+            emissive: 0x996515,
+            shininess: 100
+        });
+        const satellite = new THREE.Mesh(geometry, material);
+        scene.add(satellite);
+
+        // Lumières
+        const light = new THREE.PointLight(0xffffff, 1, 100);
+        light.position.set(10, 10, 10);
+        scene.add(light);
+        scene.add(new THREE.AmbientLight(0x404040));
+
+        camera.position.z = 5;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            satellite.rotation.y += 0.005; // 60fps rotation
+            satellite.rotation.x += 0.002;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Responsive
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / 400;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, 400);
+        });
+    </script>
 </body>
-</html>
+                </html>
+                
