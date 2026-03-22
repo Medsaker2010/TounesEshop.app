@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>TES SAT</title>
+
+<style>
+body {
+    margin:0;
+    background:black;
+    color:#FFD700;
+    font-family:Arial;
+    text-align:center;
+}
+
+h1 {
+    margin-top:40px;
+}
+
+/* Satellite */
+.satellite {
+    width:120px;
+    height:120px;
+    background:gold;
+    border-radius:50%;
+    margin:40px auto;
+    animation: spin 6s linear infinite;
+}
+
+@keyframes spin {
+    from {transform: rotate(0);}
+    to {transform: rotate(360deg);}
+}
+
+button {
+    padding:15px 30px;
+    background:#FFD700;
+    color:black;
+    border:none;
+    font-size:18px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.box {
+    margin-top:30px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>TES SAT</h1>
+<p>Console VIP Streaming</p>
+
+<div class="satellite"></div>
+
+<div id="app"></div>
+
+<script>
+let paid = false;
+
+// SIMULATION paiement
+function pay() {
+    document.getElementById("app").innerHTML = "<p>Traitement du paiement...</p>";
+
+    setTimeout(() => {
+        paid = true;
+        generateAccess();
+    }, 2000);
+}
+
+// Génération accès FAKE (frontend uniquement)
+function generateAccess() {
+    const user = "user" + Math.floor(Math.random()*10000);
+    const pass = "pass" + Math.floor(Math.random()*10000);
+
+    const link = `http://demo-server/get.php?user=${user}&pass=${pass}&type=m3u_plus`;
+
+    document.getElementById("app").innerHTML = `
+        <div class="box">
+            <h2>Accès Activé</h2>
+            <p><b>Username:</b> ${user}</p>
+            <p><b>Password:</b> ${pass}</p>
+
+            <p><b>Lien:</b></p>
+            <a href="${link}" target="_blank">${link}</a>
+
+            <br><br>
+
+            <img src="https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(link)}" />
+        </div>
+    `;
+}
+
+// Affichage initial
+document.getElementById("app").innerHTML = `
+    <button onclick="pay()">ACCÈS VIP – 5.55€</button>
+`;
+</script>
+
+</body>
+</html>
