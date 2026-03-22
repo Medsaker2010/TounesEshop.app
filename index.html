@@ -3,117 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EMPIRE TOUNES-E-SHOP VIP | Système de Pilotage Média</title>
+    <title>EMPIRE VIP - H.A. ROUIS</title>
     <script src="https://tailwindcss.com"></script>
-    <script src="https://cloudflare.com"></script>
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
-        body { background-color: #050505; color: #E5E7EB; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        .gold-gradient { background: linear-gradient(90deg, #D4AF37 0%, #F9E27E 50%, #C5A028 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .btn-vip { background: linear-gradient(45deg, #D4AF37, #996515); transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.1); }
-        .btn-vip:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3); }
-        #satellite-container { height: 400px; width: 100%; cursor: move; }
+        :root { --gold: #D4AF37; --dark: #050505; }
+        body { background-color: var(--dark); color: white; font-family: 'Montserrat', sans-serif; margin: 0; }
         .cinzel { font-family: 'Cinzel', serif; }
+        
+        /* Effet de lueur sur l'Or */
+        .gold-text {
+            background: linear-gradient(to bottom, #f9e27e 0%, #d4af37 50%, #b38728 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.3));
+        }
+
+        /* Bouton Premium */
+        .btn-gold {
+            background: linear-gradient(135deg, #D4AF37 0%, #996515 100%);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .btn-gold:active { transform: scale(0.95); }
+
+        /* Animation du fond */
+        .bg-glow {
+            position: absolute; top: 20%; left: 50%; transform: translate(-50%, -50%);
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, rgba(5, 5, 5, 0) 70%);
+            z-index: -1;
+        }
     </style>
 </head>
-<body>
+<body class="flex flex-col min-h-screen">
 
-    <!-- Header Luxe -->
-    <nav class="p-6 flex justify-between items-center border-b border-yellow-900/30">
-        <div class="text-2xl font-bold cinzel gold-gradient">EMPIRE VIP</div>
-        <div class="space-x-8 hidden md:flex text-sm tracking-widest uppercase">
-            <a href="#vision" class="hover:text-yellow-500 transition">La Vision</a>
-            <a href="#console" class="hover:text-yellow-500 transition">Console VIP</a>
-            <a href="#monnaie" class="hover:text-yellow-500 transition">Paiement Crypto</a>
+    <div class="bg-glow"></div>
+
+    <!-- Navigation Épurée -->
+    <nav class="p-6 flex justify-between items-center bg-black/50 backdrop-blur-lg sticky top-0 z-50 border-b border-white/5">
+        <div class="cinzel gold-text text-xl font-bold tracking-widest">EMPIRE VIP</div>
+        <div class="w-8 h-8 rounded-full border border-yellow-500/50 flex items-center justify-center">
+            <div class="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
         </div>
-        <button class="btn-vip px-6 py-2 rounded-full text-black font-bold text-xs uppercase tracking-tighter">Accès Membre</button>
     </nav>
 
-    <!-- Hero Section avec Satellite -->
-    <section class="relative pt-20 pb-32 flex flex-col items-center text-center px-4">
-        <h1 class="text-5xl md:text-7xl font-bold cinzel mb-6">
-            LE PRESTIGE DU <br><span class="gold-gradient">PILOTAGE MÉDIA</span>
-        </h1>
-        <p class="max-w-2xl text-gray-400 text-lg mb-10 font-light">L'automatisation totale au service de votre divertissement. Entrez dans l'ère de la gestion autonome 8K.</p>
+    <!-- Contenu Principal -->
+    <main class="flex-grow flex flex-col items-center justify-center px-8 text-center mt-10">
         
-        <!-- Le Satellite Doré (Placeholder Three.js) -->
-        <div id="satellite-container"></div>
+        <span class="text-[10px] tracking-[0.5em] uppercase text-yellow-500/60 mb-4">Système de Pilotage Média</span>
+        
+        <h1 class="cinzel text-4xl md:text-6xl font-bold leading-tight mb-8">
+            LE PRESTIGE DU <br>
+            <span class="gold-text uppercase tracking-tighter text-5xl md:text-7xl">Pilotage Média</span>
+        </h1>
 
-        <div class="mt-12 flex flex-col md:flex-row gap-6">
-            <button onclick="window.location.href='/stripe-checkout'" class="btn-vip px-10 py-4 rounded-lg text-black font-black text-lg shadow-xl">
-                DÉBLOQUER LA CONSOLE (5.55€/an)
-            </button>
+        <p class="text-gray-400 text-sm md:text-base max-w-sm leading-relaxed font-light mb-12">
+            L'automatisation totale au service de votre divertissement. Entrez dans l'ère de la <span class="text-white font-medium">gestion autonome 8K</span>.
+        </p>
+
+        <!-- Espace Satellite (Placeholder interactif) -->
+        <div class="relative w-64 h-64 mb-12 flex items-center justify-center">
+             <div class="absolute inset-0 border border-yellow-500/10 rounded-full animate-[spin_10s_linear_infinite]"></div>
+             <div class="absolute w-48 h-48 border border-yellow-500/20 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+             <img src="https://flaticon.com" class="w-32 opacity-80 brightness-150 filter sepia" alt="Satellite Gold">
         </div>
-    </section>
 
-    <!-- Arsenal de Diagnostic (Aperçu) -->
-    <section id="console" class="py-20 bg-gradient-to-b from-black to-[#0a0a0a] border-y border-yellow-900/20">
-        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-10">
-            <div class="p-8 border border-white/5 rounded-2xl bg-white/5 backdrop-blur-md">
-                <div class="text-yellow-500 text-3xl mb-4">⚡</div>
-                <h3 class="cinzel text-xl mb-2">Diagnostic Temps Réel</h3>
-                <p class="text-sm text-gray-400">Test de Ping et statut des serveurs Strong & Nexon en un clic.</p>
-            </div>
-            <div class="p-8 border border-white/5 rounded-2xl bg-white/5 backdrop-blur-md border-yellow-500/30">
-                <div class="text-yellow-500 text-3xl mb-4">🛰️</div>
-                <h3 class="cinzel text-xl mb-2">Activation Auto</h3>
-                <p class="text-sm text-gray-400">24h de test offerts immédiatement après votre inscription Stripe.</p>
-            </div>
-            <div class="p-8 border border-white/5 rounded-2xl bg-white/5 backdrop-blur-md">
-                <div class="text-yellow-500 text-3xl mb-4">₿</div>
-                <h3 class="cinzel text-xl mb-2">Crypto Gateway</h3>
-                <p class="text-sm text-gray-400">Validation Blockchain instantanée pour vos abonnements BTC/USDT.</p>
-            </div>
-        </div>
-    </section>
+        <button class="btn-gold w-full max-w-xs py-5 rounded-xl text-black font-black text-sm tracking-[0.2em] uppercase mb-4">
+            Débloquer la Console (5.55€/an)
+        </button>
+        
+        <p class="text-[9px] text-gray-600 uppercase tracking-widest">Paiement sécurisé par Stripe & Crypto</p>
+    </main>
 
-    <!-- Footer -->
-    <footer class="py-10 text-center text-gray-600 text-xs tracking-widest uppercase">
-        &copy; 2026 EMPIRE TOUNES-E-SHOP - H.A.ROUIS Edition - Zéro Intervention Humaine
+    <!-- Footer Mobile Fixe -->
+    <footer class="p-6 text-center border-t border-white/5 bg-black">
+        <p class="text-[10px] text-gray-500 tracking-widest">&copy; 2026 EDITION LIMITÉE - H.A. ROUIS</p>
     </footer>
 
-    <script>
-        // SCRIPT SATELLITE (VERSION SIMPLIFIÉE)
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / 400, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(window.innerWidth, 400);
-        document.getElementById('satellite-container').appendChild(renderer.domElement);
-
-        // Création d'une sphère dorée (Le Satellite)
-        const geometry = new THREE.IcosahedronGeometry(2, 1);
-        const material = new THREE.MeshPhongMaterial({
-            color: 0xD4AF37,
-            wireframe: true,
-            emissive: 0x996515,
-            shininess: 100
-        });
-        const satellite = new THREE.Mesh(geometry, material);
-        scene.add(satellite);
-
-        // Lumières
-        const light = new THREE.PointLight(0xffffff, 1, 100);
-        light.position.set(10, 10, 10);
-        scene.add(light);
-        scene.add(new THREE.AmbientLight(0x404040));
-
-        camera.position.z = 5;
-
-        function animate() {
-            requestAnimationFrame(animate);
-            satellite.rotation.y += 0.005; // 60fps rotation
-            satellite.rotation.x += 0.002;
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        // Responsive
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / 400;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, 400);
-        });
-    </script>
 </body>
-                </html>
-                
+</html>
