@@ -1,15 +1,21 @@
 {
-  "name": "empire-yourtvsat",
+  "name": "empireyourtvsat-vip",
   "version": "1.0.0",
-  "description": "Empire YourTvSat – Premium streaming subscription platform",
+  "description": "EmpireYourTvSat VIP Platform – Paiement Stripe + Génération accès test 24h automatisé",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node server.js"
   },
   "dependencies": {
-    "axios": "^1.6.0",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "stripe": "^14.10.0"
-  }
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
+    "qrcode": "^1.5.3",
+    "stripe": "^14.21.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "MIT"
 }
