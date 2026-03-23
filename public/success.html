@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accès Activé – Empire YourTvSat VIP</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #FFD700;
+      --silver: #C0C0C0;
+      --bg: #080810;
+      --card: #10101e;
+      --green: #00eb4a;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--gold);
+      font-family: 'Segoe UI', Montserrat, Arial, sans-serif;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: flex-start;
+      padding: 2rem 1rem;
+    }
+
+    #stars {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    }
+    .star {
+      position: absolute; border-radius: 50%;
+      background: #fff; opacity: 0;
+      animation: twinkle 3s infinite alternate;
+    }
+    @keyframes twinkle {
+      0%   { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 0.85; transform: scale(1.2); }
+    }
+
+    .page-wrap { position: relative; z-index: 1; width: 100%; max-width: 700px; }
+
+    /* ── Check animé ── */
+    .check-circle {
+      width: 90px; height: 90px;
+      background: radial-gradient(circle, #00eb4a22, transparent 70%);
+      border: 3px solid var(--green);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem; margin: 0 auto 1.4rem;
+      animation: pulse-green 2s ease-in-out infinite;
+    }
+    @keyframes pulse-green {
+      0%, 100% { box-shadow: 0 0 0 0 #00eb4a44; }
+      50%       { box-shadow: 0 0 0 16px transparent; }
+    }
+
+    h1 {
+      text-align: center; font-size: clamp(1.8rem, 4vw, 2.8rem);
+      background: linear-gradient(135deg, #FFD700, #C0C0C0, #FFD700);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: .5rem;
+    }
+    .subtitle { text-align:center; color:var(--silver); font-size:1.05rem; margin-bottom:2rem; }
+
+    /* ── Loader ── */
+    #loading {
+      text-align:center; padding:3rem 1rem;
+    }
+    .spinner {
+      display:inline-block; width:48px; height:48px;
+      border:4px solid #FFD70033; border-top-color:var(--gold);
+      border-radius:50%; animation:spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    #loading p { color:var(--silver); margin-top:1.2rem; font-size:1rem; }
+
+    /* ── Carte accès ── */
+    .access-card {
+      background: var(--card);
+      border: 1px solid #FFD70033;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 0 40px #FFD70015;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── QR Code ── */
+    .qr-wrap {
+      text-align: center; margin-bottom: 1.8rem;
+    }
+    .qr-wrap img {
+      width: 200px; height: 200px;
+      border: 3px solid #FFD70033;
+      border-radius: 14px;
+      box-shadow: 0 0 24px #FFD70033;
+    }
+    .qr-label { color:var(--silver); font-size:.85rem; margin-top:.5rem; }
+
+    /* ── Infos ── */
+    .info-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1rem; margin-bottom: 1.5rem;
+    }
+    @media (max-width:480px) { .info-grid { grid-template-columns:1fr; } }
+
+    .info-item {
+      background: #1a1a2e;
+      border-radius: 12px; padding: 1rem;
+      border: 1px solid #FFD70022;
+    }
+    .info-label { color:var(--silver); font-size:.78rem; text-transform:uppercase; letter-spacing:.5px; margin-bottom:.35rem; }
+    .info-value {
+      font-size: 1.05rem; font-weight: 700;
+      word-break: break-all;
+    }
+    .copy-btn {
+      background: none; border: none; color: var(--gold);
+      cursor: pointer; font-size: .8rem; margin-left:.5rem;
+      padding: .2rem .5rem; border-radius:4px;
+      transition: background .15s;
+    }
+    .copy-btn:hover { background:#FFD70022; }
+
+    /* ── M3U ── */
+    .m3u-block {
+      background: #0e0e1c;
+      border: 1px solid #FFD70033;
+      border-radius: 12px; padding: 1rem;
+      margin-bottom: 1.5rem;
+      word-break: break-all;
+    }
+    .m3u-label { color:var(--silver); font-size:.8rem; margin-bottom:.4rem; }
+    .m3u-url {
+      color: var(--gold); font-size: .88rem;
+      font-family: 'Consolas', 'Fira Mono', monospace;
+    }
+    .m3u-copy {
+      display:block; margin-top:.6rem;
+      background: #FFD70011; border: 1px solid #FFD70044;
+      color: var(--gold); padding: .35rem .9rem;
+      border-radius: 50px; cursor:pointer; font-size:.85rem;
+      width: fit-content; transition: background .15s;
+    }
+    .m3u-copy:hover { background:#FFD70022; }
+
+    /* ── Expiration ── */
+    .expire-badge {
+      display:inline-flex; align-items:center; gap:.5rem;
+      background:#00eb4a11; border:1px solid #00eb4a44;
+      color:var(--green); padding:.5rem 1rem;
+      border-radius:50px; font-size:.9rem; margin-bottom:1.5rem;
+    }
+
+    /* ── Server badge ── */
+    .server-badge {
+      display:inline-flex; align-items:center; gap:.4rem;
+      background:#FFD70011; border:1px solid #FFD70033;
+      color:var(--gold); padding:.4rem .9rem;
+      border-radius:50px; font-size:.85rem; margin-bottom:1.5rem;
+    }
+
+    /* ── Bouton retour ── */
+    .back-btn {
+      display:block; width:100%;
+      padding:.85rem; background:linear-gradient(90deg,#FFD700,#e6c200);
+      color:#111; font-weight:900; font-size:1rem;
+      text-transform:uppercase; letter-spacing:1px;
+      border:none; border-radius:12px; cursor:pointer;
+      box-shadow:0 0 18px #FFD70033; transition:transform .15s;
+      text-decoration:none; text-align:center;
+    }
+    .back-btn:hover { transform:scale(1.02); }
+
+    .notice {
+      color:#888; font-size:.82rem; text-align:center;
+      margin-top:1.2rem; line-height:1.6;
+    }
+
+    #error-view { text-align:center; padding:2rem; }
+    #error-view h2 { color:#ff6666; margin-bottom:.8rem; }
+    #error-view p  { color:var(--silver); }
+
+    .copied-msg { display:none; color:var(--green); font-size:.78rem; margin-left:.3rem; }
+  </style>
+</head>
+<body>
+
+<div id="stars"></div>
+
+<div class="page-wrap">
+
+  <!-- Loader initial -->
+  <div id="loading">
+    <div class="spinner"></div>
+    <p>🛰️ Connexion aux serveurs… Génération de votre accès en cours</p>
+  </div>
+
+  <!-- Vue succès (cachée au départ) -->
+  <div id="success-view" style="display:none">
+    <div class="check-circle">✅</div>
+    <h1>Accès VIP Activé !</h1>
+    <p class="subtitle">Votre accès a été généré avec succès. Scannez le QR code ou copiez les identifiants ci-dessous.</p>
+
+    <div class="access-card">
+
+      <!-- QR Code -->
+      <div class="qr-wrap">
+        <img id="qr-img" src="" alt="QR Code M3U" />
+        <div class="qr-label">Scannez avec votre box/application IPTV</div>
+      </div>
+
+      <!-- Server badge -->
+      <div style="text-align:center;margin-bottom:1rem">
+        <span class="server-badge">📡 Serveur : <strong id="server-name">–</strong></span>
+      </div>
+
+      <!-- Expiration -->
+      <div style="text-align:center;margin-bottom:1.2rem">
+        <span class="expire-badge">⏱️ Expire : <strong id="expire-date">–</strong></span>
+      </div>
+
+      <!-- Grille infos -->
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">Utilisateur</div>
+          <div class="info-value">
+            <span id="username-val">–</span>
+            <button class="copy-btn" onclick="copyField('username-val', this)">📋</button>
+            <span class="copied-msg" id="copied-username-val">✔ Copié</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Mot de passe</div>
+          <div class="info-value">
+            <span id="password-val">–</span>
+            <button class="copy-btn" onclick="copyField('password-val', this)">📋</button>
+            <span class="copied-msg" id="copied-password-val">✔ Copié</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lien M3U -->
+      <div class="m3u-block">
+        <div class="m3u-label">🔗 Lien M3U Plus</div>
+        <div class="m3u-url" id="m3u-url">–</div>
+        <button class="m3u-copy" onclick="copyM3U()">📋 Copier le lien M3U</button>
+      </div>
+
+      <!-- Bouton retour -->
+      <a class="back-btn" href="/">↩ Retour à l'accueil</a>
+    </div>
+
+    <p class="notice">
+      ⚠️ Conservez ces identifiants précieusement.<br>
+      Votre accès test expirera automatiquement après 24h.<br>
+      Un e-mail de confirmation vous a été envoyé.
+    </p>
+  </div>
+
+  <!-- Vue erreur -->
+  <div id="error-view" style="display:none">
+    <h2>⚠️ Erreur de génération</h2>
+    <p id="error-msg">Une erreur est survenue lors de la création de votre accès.</p>
+    <br/>
+    <a class="back-btn" href="/" style="display:inline-block;width:auto;padding:.7rem 2rem">Retour à l'accueil</a>
+  </div>
+
+</div><!-- /.page-wrap -->
+
+<script>
+  // ── Étoiles ──
+  (function() {
+    const c = document.getElementById('stars');
+    for (let i = 0; i < 80; i++) {
+      const s = document.createElement('div'); s.className = 'star';
+      const sz = Math.random()*2+.5;
+      s.style.cssText = [
+        `width:${sz}px`,`height:${sz}px`,
+        `top:${Math.random()*100}%`,`left:${Math.random()*100}%`,
+        `animation-delay:${Math.random()*5}s`,
+        `animation-duration:${Math.random()*3+2}s`
+      ].join(';');
+      c.appendChild(s);
+    }
+  })();
+
+  // ── Affichage données ──
+  function show(data) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('success-view').style.display = 'block';
+
+    if (data.qrCode) {
+      document.getElementById('qr-img').src = data.qrCode;
+    }
+    document.getElementById('username-val').textContent = data.username || '–';
+    document.getElementById('password-val').textContent = data.password || '–';
+    document.getElementById('m3u-url').textContent      = data.m3uUrl   || '–';
+    document.getElementById('expire-date').textContent  = data.expireLabel || data.expire || '–';
+    document.getElementById('server-name').textContent  = data.serverLabel || data.server || '–';
+  }
+
+  function showError(msg) {
+    document.getElementById('loading').style.display  = 'none';
+    document.getElementById('error-view').style.display = 'block';
+    document.getElementById('error-msg').textContent = msg;
+  }
+
+  // ── Lecture des paramètres ──
+  const params = new URLSearchParams(window.location.search);
+
+  // Bypass admin : toutes les infos sont dans l'URL (déjà encodées)
+  if (params.get('adminBypass') === '1') {
+    const qrCode = params.get('qrCode') || '';
+    show({
+      qrCode,
+      username:    params.get('username') || '',
+      password:    params.get('password') || '',
+      m3uUrl:      params.get('m3uUrl')   || '',
+      expireLabel: params.get('expire')   || '',
+      serverLabel: params.get('server')   || '',
+    });
+  } else {
+    // Paiement Stripe normal : on interroge le backend
+    const sessionId = params.get('session_id');
+    if (!sessionId) {
+      showError('Aucune session de paiement détectée.');
+    } else {
+      fetch('/api/session-access?session_id=' + encodeURIComponent(sessionId))
+        .then(r => {
+          if (!r.ok) return r.json().then(d => Promise.reject(d.error || 'Erreur serveur'));
+          return r.json();
+        })
+        .then(show)
+        .catch(err => showError(typeof err === 'string' ? err : 'Erreur lors de la récupération de l\'accès.'));
+    }
+  }
+
+  // ── Copie ──
+  function copyField(id, btn) {
+    const val = document.getElementById(id).textContent;
+    if (!navigator.clipboard) {
+      alert('Copie non disponible (HTTPS requis). Valeur : ' + val);
+      return;
+    }
+    navigator.clipboard.writeText(val).then(() => {
+      const msg = document.getElementById('copied-' + id);
+      if (msg) { msg.style.display = 'inline'; setTimeout(() => msg.style.display = 'none', 2000); }
+    }).catch(() => alert('Impossible de copier. Valeur : ' + val));
+  }
+  function copyM3U() {
+    const val = document.getElementById('m3u-url').textContent;
+    if (!navigator.clipboard) {
+      alert('Copie non disponible (HTTPS requis). Valeur : ' + val);
+      return;
+    }
+    navigator.clipboard.writeText(val).then(() => {
+      const btn = document.querySelector('.m3u-copy');
+      const orig = btn.textContent;
+      btn.textContent = '✔ Copié !';
+      setTimeout(() => btn.textContent = orig, 2000);
+    }).catch(() => alert('Impossible de copier. Valeur : ' + val));
+  }
+</script>
+</body>
+</html>

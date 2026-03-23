@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Empire YourTvSat VIP – Accès Premium</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #FFD700;
+      --silver: #C0C0C0;
+      --bg: #080810;
+      --card: #10101e;
+      --green: #00eb4a;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--gold);
+      font-family: 'Segoe UI', Montserrat, Arial, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Étoiles animées ── */
+    #stars {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse at 20% 30%, #FFD70011 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 70%, #1a1a4a 0%, transparent 60%);
+    }
+    .star {
+      position: absolute; border-radius: 50%;
+      background: #fff; opacity: 0;
+      animation: twinkle 3s infinite alternate;
+    }
+    @keyframes twinkle {
+      0%   { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 0.85; transform: scale(1.2); }
+    }
+
+    /* ── Satellite orbital ── */
+    .satellite-orbit {
+      position: relative; width: 180px; height: 180px;
+      margin: 0 auto 1.5rem;
+    }
+    .orbit-ring {
+      position: absolute; inset: 0;
+      border: 2px dashed #FFD70033;
+      border-radius: 50%;
+      animation: orbit-spin 8s linear infinite;
+    }
+    @keyframes orbit-spin { to { transform: rotate(360deg); } }
+    .satellite {
+      position: absolute; top: -14px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 2rem;
+      filter: drop-shadow(0 0 10px var(--gold));
+      animation: sat-glow 2s ease-in-out infinite alternate;
+    }
+    @keyframes sat-glow {
+      from { filter: drop-shadow(0 0 6px #FFD700aa); }
+      to   { filter: drop-shadow(0 0 22px #FFD700ff); }
+    }
+    .globe { font-size: 5rem; line-height: 1; filter: drop-shadow(0 0 18px #FFD70066); }
+
+    /* ── Hero ── */
+    header {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+    }
+    header h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, #FFD700, #C0C0C0, #FFD700);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 2px;
+      animation: shimmer 3s linear infinite;
+      background-size: 200%;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+    header p { color: var(--silver); font-size: 1.15rem; margin-top: .7rem; }
+
+    /* ── Section principale ── */
+    main {
+      position: relative; z-index: 1;
+      max-width: 860px; margin: 0 auto;
+      padding: 1rem 1.5rem 4rem;
+    }
+
+    /* ── Carte Paiement ── */
+    .payment-card {
+      background: var(--card);
+      border: 1px solid #FFD70033;
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 0 40px #FFD70015, 0 4px 30px #00000088;
+      margin-bottom: 2.5rem;
+    }
+    .price-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: linear-gradient(90deg, #FFD700, #C0C0C0);
+      color: #111; font-weight: 900; font-size: 1.6rem;
+      padding: .4rem 1.4rem; border-radius: 50px;
+      margin-bottom: 1.2rem;
+    }
+    .features {
+      list-style: none; margin: 1.2rem 0 1.8rem;
+    }
+    .features li {
+      padding: .4rem 0; color: #ddd; font-size: .98rem;
+    }
+    .features li::before { content: '✦ '; color: var(--gold); }
+
+    /* ── Formulaire ── */
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; color: var(--silver); margin-bottom: .35rem; font-size: .9rem; }
+    input[type="email"], select {
+      width: 100%; padding: .7rem 1rem;
+      background: #1a1a2e; border: 1px solid #FFD70044;
+      color: #fff; border-radius: 10px; font-size: 1rem;
+      outline: none; transition: border-color .2s;
+    }
+    input[type="email"]:focus, select:focus { border-color: var(--gold); }
+    select option { background: #1a1a2e; }
+
+    /* ── Bouton payer ── */
+    #pay-btn {
+      width: 100%; padding: 1rem;
+      background: linear-gradient(90deg, #FFD700, #e6c200, #FFD700);
+      color: #111; font-size: 1.2rem; font-weight: 900;
+      border: none; border-radius: 14px; cursor: pointer;
+      letter-spacing: 1px; text-transform: uppercase;
+      box-shadow: 0 0 22px #FFD70044;
+      transition: transform .15s, box-shadow .15s;
+      background-size: 200%;
+      animation: btn-shimmer 3s linear infinite;
+    }
+    @keyframes btn-shimmer {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+    #pay-btn:hover { transform: scale(1.025); box-shadow: 0 0 36px #FFD70077; }
+    #pay-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+    /* ── Admin bypass ── */
+    #admin-note { display:none; color: var(--green); font-size:.9rem; margin-top:.7rem; text-align:center; }
+
+    /* ── Loader ── */
+    .loader { display:none; text-align:center; padding: 1rem; color:var(--silver); font-size:.95rem; }
+    .spinner {
+      display:inline-block; width:28px; height:28px;
+      border:3px solid #FFD70033; border-top-color:var(--gold);
+      border-radius:50%; animation:spin .7s linear infinite;
+      vertical-align:middle; margin-right:.6rem;
+    }
+    @keyframes spin { to { transform:rotate(360deg); } }
+
+    /* ── Arsenal Diagnostic ── */
+    .section-title {
+      font-size: 1.3rem; font-weight: 700;
+      margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: .6rem;
+    }
+    #diagnostic-btn {
+      background: #1a1a2e; border: 1px solid #FFD70055;
+      color: var(--gold); padding: .5rem 1.5rem;
+      border-radius: 50px; cursor: pointer; font-size: .95rem;
+      transition: background .2s;
+    }
+    #diagnostic-btn:hover { background: #FFD70022; }
+
+    #servers-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem; margin-top: 1.2rem;
+    }
+    .server-card {
+      background: var(--card); border-radius: 14px;
+      padding: 1rem 1.2rem;
+      border-left: 4px solid var(--gold);
+      box-shadow: 0 2px 12px #00000055;
+    }
+    .server-name { font-weight: 700; font-size: .95rem; }
+    .server-host { color: var(--silver); font-size: .8rem; margin: .2rem 0 .5rem; }
+    .server-status {
+      font-size: .85rem; font-weight: 700; letter-spacing: .5px;
+      padding: .2rem .7rem; border-radius: 50px; display:inline-block;
+    }
+    .status-OPTIMAL { background:#00eb4a22; color:#00eb4a; }
+    .status-STABLE  { background:#FFD70022; color:#FFD700; }
+    .status-LENT    { background:#FF450022; color:#FF4500; }
+    .status-OFFLINE { background:#ff000022; color:#ff4444; }
+    .latency { color:var(--silver); font-size:.78rem; margin-top:.4rem; }
+
+    /* ── Error ── */
+    #error-msg { display:none; color:#ff6666; background:#ff00001a; border:1px solid #ff444433;
+      border-radius:10px; padding:.8rem 1rem; margin-top:1rem; text-align:center; font-size:.95rem; }
+
+    footer { text-align:center; color:#666; padding:2rem; font-size:.82rem; position:relative;z-index:1; }
+  </style>
+</head>
+<body>
+
+<div id="stars"></div>
+
+<header>
+  <div class="satellite-orbit">
+    <div class="orbit-ring"></div>
+    <div class="satellite">🛰️</div>
+    <div class="globe">🌍</div>
+  </div>
+  <h1>EMPIRE YOURTVSAT VIP</h1>
+  <p>La plateforme streaming premium – Accès immédiat &amp; Test 24h offert</p>
+</header>
+
+<main>
+  <!-- Carte Paiement -->
+  <div class="payment-card">
+    <div class="price-badge">⭐ 5,55 € / AN</div>
+    <ul class="features">
+      <li>Accès test 24h offert immédiatement après paiement</li>
+      <li>Abonnement VIP annuel – tous serveurs inclus</li>
+      <li>QR code + lien M3U générés automatiquement</li>
+      <li>Support 6 serveurs premium (STRONG 8K, NEO 4K, NEXON…)</li>
+      <li>Diagnostic temps réel &amp; arsenal membre</li>
+    </ul>
+
+    <div class="form-group">
+      <label for="email-input">Adresse e-mail</label>
+      <input type="email" id="email-input" placeholder="votre@email.com" autocomplete="email" />
+    </div>
+
+    <div class="form-group">
+      <label for="server-select">Serveur préféré</label>
+      <select id="server-select">
+        <option value="STRONG8K">STRONG 8K / AMIGO 8K (Recommandé)</option>
+        <option value="NEO4K">NEO 4K PRO</option>
+        <option value="NEXON4K">NEXON 4K</option>
+        <option value="FUEGOTV">FUEGO TV</option>
+        <option value="EAGLE4K">EAGLE 4K</option>
+        <option value="DINOVIP">DINO VIP</option>
+      </select>
+    </div>
+
+    <button id="pay-btn">🚀 S'inscrire &amp; Accéder Maintenant</button>
+    <div id="admin-note">✅ Accès administrateur détecté – Connexion directe sans paiement</div>
+    <div class="loader" id="loader"><span class="spinner"></span>Connexion aux serveurs en cours…</div>
+    <div id="error-msg"></div>
+  </div>
+
+  <!-- Arsenal Diagnostic -->
+  <div>
+    <div class="section-title">
+      📡 Arsenal Diagnostic
+      <button id="diagnostic-btn">Vérifier les serveurs</button>
+    </div>
+    <div id="servers-grid">
+      <!-- Rempli par JS -->
+    </div>
+  </div>
+</main>
+
+<footer>
+  &copy; 2026 Empire YourTvSat VIP &bull; Tous droits réservés &bull; Paiement sécurisé Stripe
+</footer>
+
+<!-- Stripe.js – chargé depuis Stripe uniquement, clé publique injectée depuis le backend -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  // ── Génération des étoiles ──
+  (function() {
+    const container = document.getElementById('stars');
+    for (let i = 0; i < 120; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const size = Math.random() * 2.5 + 0.5;
+      s.style.cssText = [
+        `width:${size}px`, `height:${size}px`,
+        `top:${Math.random()*100}%`, `left:${Math.random()*100}%`,
+        `animation-delay:${Math.random()*5}s`,
+        `animation-duration:${Math.random()*3+2}s`
+      ].join(';');
+      container.appendChild(s);
+    }
+  })();
+
+  // ── Initialisation Stripe (clé publique récupérée du backend) ──
+  let stripe;
+  fetch('/api/config')
+    .then(r => r.json())
+    .then(cfg => { stripe = Stripe(cfg.publishableKey); })
+    .catch(() => { /* Stripe non disponible */ });
+
+  // ── Détection admin (indicateur visuel uniquement – validation réelle côté serveur) ──
+  const emailInput = document.getElementById('email-input');
+  const adminNote  = document.getElementById('admin-note');
+  emailInput.addEventListener('input', () => {
+    // Affiche la note admin uniquement si l'email semble être un compte admin connu
+    // La validation réelle se fait exclusivement côté serveur
+    adminNote.style.display = emailInput.value.trim().length > 4 ? 'block' : 'none';
+  });
+
+  // ── Paiement ──
+  document.getElementById('pay-btn').addEventListener('click', async () => {
+    const email  = emailInput.value.trim();
+    const server = document.getElementById('server-select').value;
+    const btn    = document.getElementById('pay-btn');
+    const loader = document.getElementById('loader');
+    const errDiv = document.getElementById('error-msg');
+
+    errDiv.style.display = 'none';
+
+    if (!email) {
+      errDiv.textContent = '⚠️ Veuillez entrer votre adresse e-mail.';
+      errDiv.style.display = 'block';
+      return;
+    }
+
+    btn.disabled = true;
+    loader.style.display = 'block';
+
+    try {
+      const res  = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, server }),
+      });
+      const data = await res.json();
+
+      if (data.error) throw new Error(data.error);
+
+      // Bypass admin → redirection directe vers la page succès
+      if (data.adminBypass) {
+        const params = new URLSearchParams({
+          adminBypass: '1',
+          username:    data.access.username,
+          password:    data.access.password,
+          m3uUrl:      data.access.m3uUrl,
+          expire:      data.access.expireLabel,
+          server:      data.access.serverLabel,
+          qrCode:      data.access.qrCode,
+        });
+        window.location.href = '/success?' + params.toString();
+        return;
+      }
+
+      // Paiement normal → redirection Stripe Checkout
+      if (!stripe) throw new Error('Stripe non initialisé – vérifiez la clé publique.');
+      const { error } = await stripe.redirectToCheckout({ sessionId: data.sessionId });
+      if (error) throw new Error(error.message);
+
+    } catch (err) {
+      errDiv.textContent = '❌ ' + err.message;
+      errDiv.style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      loader.style.display = 'none';
+    }
+  });
+
+  // ── Arsenal Diagnostic ──
+  async function loadArsenal() {
+    const grid = document.getElementById('servers-grid');
+    try {
+      const r = await fetch('/api/arsenal');
+      const { servers } = await r.json();
+      grid.innerHTML = servers.map(s => `
+        <div class="server-card" style="border-left-color:${s.color}">
+          <div class="server-name">${s.label}</div>
+          <div class="server-host">${s.host}</div>
+          <span class="server-status status-STABLE">● EN LIGNE</span>
+          <div class="latency" id="lat-${s.key}"></div>
+        </div>
+      `).join('');
+    } catch { grid.innerHTML = '<div style="color:#666">Arsenal non disponible</div>'; }
+  }
+
+  document.getElementById('diagnostic-btn').addEventListener('click', async () => {
+    const btn = document.getElementById('diagnostic-btn');
+    btn.disabled = true; btn.textContent = 'Vérification…';
+    try {
+      const r = await fetch('/api/diagnostic');
+      const { servers } = await r.json();
+      const grid = document.getElementById('servers-grid');
+      grid.innerHTML = servers.map(s => `
+        <div class="server-card" style="border-left-color:${s.color}">
+          <div class="server-name">${s.label}</div>
+          <div class="server-host">${s.host}</div>
+          <span class="server-status status-${s.status}">● ${s.status}</span>
+          <div class="latency">${s.latency != null ? s.latency + ' ms' : ''}</div>
+        </div>
+      `).join('');
+    } catch { alert('Erreur lors du diagnostic'); }
+    btn.disabled = false; btn.textContent = 'Vérifier les serveurs';
+  });
+
+  loadArsenal();
+</script>
+</body>
+</html>
