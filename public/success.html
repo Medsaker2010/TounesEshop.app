@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paiement validé – Empire YourTvSat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Cinzel:wght@400;700&family=Fira+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #FFD700;
+      --gold-light: #FFF0A0;
+      --gold-dark: #B8860B;
+      --silver: #C0C0C0;
+      --silver-light: #E8E8E8;
+      --green: #00EB7A;
+      --oled-black: #000000;
+      --card-bg: #0a0a0a;
+    }
+
+    body {
+      background: var(--oled-black);
+      color: var(--silver-light);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    /* ── Particle background ── */
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: #fff;
+      animation: twinkle linear infinite;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; transform: scale(0.5); }
+      50%       { opacity: 1; transform: scale(1); }
+    }
+
+    /* ── Card ── */
+    .card {
+      position: relative;
+      z-index: 1;
+      background: var(--card-bg);
+      border: 1px solid rgba(255,215,0,0.2);
+      border-radius: 28px;
+      padding: 3rem 2.5rem;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 0 80px rgba(255,215,0,0.07);
+      animation: fadeUp 0.5s ease-out;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Checkmark ── */
+    .check-wrap {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: rgba(0,235,122,0.1);
+      border: 2px solid var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 2.4rem;
+      box-shadow: 0 0 30px rgba(0,235,122,0.3);
+      animation: pop 0.4s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
+    }
+    @keyframes pop {
+      from { transform: scale(0); }
+      to   { transform: scale(1); }
+    }
+
+    /* ── Headlines ── */
+    .title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      background: linear-gradient(135deg, var(--gold), var(--silver-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.6rem;
+    }
+    .subtitle {
+      color: var(--silver);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    /* ── Loading state ── */
+    .loading-wrap {
+      padding: 1.5rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid rgba(255,215,0,0.15);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .loading-text { color: var(--silver); font-size: 0.9rem; }
+
+    /* ── Access box ── */
+    .access-section { display: none; }
+
+    .access-label {
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--silver);
+      margin-bottom: 0.6rem;
+      opacity: 0.7;
+    }
+    .code-block {
+      background: rgba(255,215,0,0.06);
+      border: 1.5px solid rgba(255,215,0,0.5);
+      border-radius: 10px;
+      padding: 0.8rem 1.4rem;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      font-size: 1.4rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+      margin-bottom: 0.6rem;
+      word-break: break-all;
+      box-shadow: 0 0 20px rgba(255,215,0,0.12);
+      cursor: pointer;
+      transition: background 0.15s;
+      position: relative;
+    }
+    .code-block:hover { background: rgba(255,215,0,0.1); }
+    .copy-hint {
+      font-size: 0.7rem;
+      color: var(--silver);
+      opacity: 0.6;
+      margin-bottom: 1.4rem;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .expire-box {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid #1a1a1a;
+      border-radius: 8px;
+      padding: 0.7rem 1rem;
+      font-size: 0.88rem;
+      color: var(--silver);
+      margin-bottom: 1.8rem;
+    }
+    .expire-box span { color: var(--silver-light); font-weight: 600; }
+
+    /* Optional extra details (username/password/m3u) */
+    .credentials-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin-bottom: 1.6rem;
+      text-align: left;
+    }
+    .cred-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid #1a1a1a;
+      border-radius: 8px;
+      padding: 0.7rem 0.9rem;
+    }
+    .cred-label {
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--silver);
+      opacity: 0.6;
+      margin-bottom: 0.3rem;
+    }
+    .cred-value {
+      font-family: 'Fira Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--silver-light);
+      word-break: break-all;
+    }
+
+    .info-note {
+      font-size: 0.82rem;
+      color: var(--silver);
+      line-height: 1.65;
+      margin-bottom: 2rem;
+      background: rgba(255,215,0,0.04);
+      border-radius: 8px;
+      padding: 1rem;
+      border: 1px solid rgba(255,215,0,0.1);
+    }
+
+    /* ── Error state ── */
+    .error-section {
+      display: none;
+      padding: 1rem 0;
+    }
+    .error-msg {
+      background: rgba(255,50,50,0.08);
+      border: 1px solid rgba(255,50,50,0.25);
+      border-radius: 8px;
+      color: #ff7070;
+      padding: 1rem;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── Button ── */
+    .btn-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2.5rem;
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+      color: #000;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 0 24px rgba(255,215,0,0.3);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-home:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 40px rgba(255,215,0,0.5);
+    }
+
+    /* ── Copied toast ── */
+    .toast {
+      position: fixed;
+      bottom: 2rem; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: rgba(255,215,0,0.9);
+      color: #000;
+      font-weight: 700;
+      padding: 0.7rem 1.8rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      transition: transform 0.3s ease;
+      pointer-events: none;
+      z-index: 100;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+
+  <div class="stars" id="stars"></div>
+  <div class="toast" id="toast">✦ Copié !</div>
+
+  <div class="card">
+    <div class="check-wrap">✔</div>
+    <h1 class="title">Paiement Validé !</h1>
+    <p class="subtitle">
+      Bienvenue dans l'Empire YourTvSat.<br>
+      Votre accès test 24h est en cours d'activation…
+    </p>
+
+    <!-- Loading -->
+    <div class="loading-wrap" id="loading-wrap">
+      <div class="spinner"></div>
+      <p class="loading-text">Génération de votre accès en cours…</p>
+    </div>
+
+    <!-- Access details (shown after API response) -->
+    <div class="access-section" id="access-section">
+      <p class="access-label">Votre code d'accès test 24h</p>
+      <div class="code-block" id="code-display" title="Cliquer pour copier">—</div>
+      <p class="copy-hint">Cliquez sur le code pour le copier</p>
+
+      <div class="credentials-grid" id="credentials-grid" style="display:none">
+        <div class="cred-item">
+          <div class="cred-label">Identifiant</div>
+          <div class="cred-value" id="cred-username">—</div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-label">Mot de passe</div>
+          <div class="cred-value" id="cred-password">—</div>
+        </div>
+      </div>
+
+      <div class="expire-box">
+        Expire le : <span id="expire-display">—</span>
+      </div>
+
+      <div class="info-note">
+        ✉️ Un e-mail de confirmation a été envoyé à votre adresse.<br>
+        Conservez précieusement votre code d'accès. Pour tout souci, contactez notre support VIP.
+      </div>
+    </div>
+
+    <!-- Error state -->
+    <div class="error-section" id="error-section">
+      <div class="error-msg" id="error-detail">
+        Votre paiement est bien enregistré mais l'accès est encore en cours d'activation.
+        Veuillez patienter quelques secondes et rafraîchir la page, ou contactez le support.
+      </div>
+    </div>
+
+    <a href="/" class="btn-home">↩ Retour à l'accueil</a>
+  </div>
+
+  <script>
+    // Starfield
+    (function () {
+      const c = document.getElementById('stars');
+      for (let i = 0; i < 80; i++) {
+        const s = document.createElement('div');
+        s.className = 'star';
+        const sz = Math.random() * 2 + 0.5;
+        s.style.cssText = `width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;animation-duration:${(Math.random()*4+2).toFixed(1)}s;animation-delay:${(Math.random()*5).toFixed(1)}s;opacity:${Math.random()}`;
+        c.appendChild(s);
+      }
+    })();
+
+    // Copy to clipboard
+    function copyCode(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        const t = document.getElementById('toast');
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2000);
+      }).catch(() => {});
+    }
+    document.getElementById('code-display').addEventListener('click', function () {
+      copyCode(this.innerText);
+    });
+
+    // Poll for access until available (max 8 retries, 3s apart)
+    const MAX_RETRIES = 8;
+    let attempts = 0;
+
+    function getSessionId() {
+      return new URLSearchParams(window.location.search).get('session_id');
+    }
+
+    async function fetchAccess() {
+      const sessionId = getSessionId();
+      if (!sessionId) {
+        showError('Aucune session de paiement détectée.');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/session-access?session_id=' + encodeURIComponent(sessionId));
+        if (res.status === 404 && attempts < MAX_RETRIES) {
+          attempts++;
+          setTimeout(fetchAccess, 3000);
+          return;
+        }
+        if (!res.ok) throw new Error('Session introuvable');
+        const data = await res.json();
+        showAccess(data);
+      } catch (e) {
+        if (attempts < MAX_RETRIES) {
+          attempts++;
+          setTimeout(fetchAccess, 3000);
+        } else {
+          showError('Impossible de charger l\'accès. Vérifiez votre e-mail ou contactez le support.');
+        }
+      }
+    }
+
+    function showAccess(data) {
+      document.getElementById('loading-wrap').style.display = 'none';
+      document.getElementById('access-section').style.display = 'block';
+
+      const codeEl = document.getElementById('code-display');
+      codeEl.innerText = data.code || '—';
+
+      document.getElementById('expire-display').innerText = data.expire || '—';
+
+      // Show credentials grid if username/password are provided separately
+      if (data.username && data.password) {
+        document.getElementById('cred-username').innerText = data.username;
+        document.getElementById('cred-password').innerText = data.password;
+        document.getElementById('credentials-grid').style.display = 'grid';
+      }
+    }
+
+    function showError(msg) {
+      document.getElementById('loading-wrap').style.display = 'none';
+      document.getElementById('error-detail').innerText = msg;
+      document.getElementById('error-section').style.display = 'block';
+    }
+
+    // Start polling on page load
+    fetchAccess();
+  </script>
+</body>
+</html>
